@@ -14,14 +14,14 @@ Problem with this model is that all information about the input sequence is embe
 **Solution: use all hidden states**
 Use the average of the hidden representation of all inputs, then supply to every output word.
 Problem: Same importance is given to all inputs for all outputs, but some outputs may have stronger associations with some inputs.
-![[Pasted image 20240709194936.png]]
+![image](<Pasted image 20240709194936.png>)
 
 
 **Used different weighted average of inputs for each output: attention weights**
 Each output computation has a unique weighted average of inputs coming in. This way each output word can have different attention on different parts of the input.
 The weighted average of all the input is known as the context vector.
 	The weights used are known as the attention weights. These are computed when/prior to computing the output at time t. We use the information available at time t to compute the attention weights.
-![[Pasted image 20240709195109.png]]
+![image](<Pasted image 20240709195109.png>)
 
 How do you compute the attention weights?
 1. Because they are used for weighted sum of inputs, the weights themselves must sum to 1.
@@ -37,7 +37,7 @@ Steps:
 		2. This weight is computed by dot product of the query of the output and key of each input. The dot product gives the similarity between the two vectors. Think of broadcasting the dot product with the query vector across the array of key vectors of input. 
 		3. The dot product is followed by a softmax over alll q dot k for all input, which means that we prioritize the most relevant input to the output in terms of similarity calculated by the dot product. Softmax also means that all the weights sum to 1, which means that the context vector becomes an weight average of all inputs.
 2. softmax of raw weights.
-![[Pasted image 20240709200755.png]]
+![image](<Pasted image 20240709200755.png>)
 
 ## converting an input: inference
 1. Compute hidden representation of all of input sequence.
@@ -47,8 +47,8 @@ Steps:
 		1. All the hidden states are identical shape, since RNN's have shared parameters.
 3. 
 
-![[Pasted image 20240709201139.png]]
-![[Pasted image 20240709204729.png]]
+![image](<Pasted image 20240709201139.png>)
+![image](<Pasted image 20240709204729.png>)
 ## Query key value:
 The encoder outputs a key and value at each input time.
 The decoder outputs a query at each output time.
@@ -56,9 +56,9 @@ The decoder outputs a query at each output time.
 The key and the query is used to compute the weights for the context vector. Its based on the dot product between the two, which computes the similarity in vector angle.
 
 The context is weighted sum of the values, whose weights are computed as above.
-![[Pasted image 20240709205030.png]]
+![image](<Pasted image 20240709205030.png>)
 ### Example of attention weights:
-![[Pasted image 20240709205636.png]]
+![image](<Pasted image 20240709205636.png>)
 	For each output, most important input is highlighted. General trend is diagonal, showing order synchrony in the input and the output.
 
 
@@ -69,7 +69,7 @@ In teacher forced learning, we give the model the desired sequence until t-1 to 
 This differs from traditional mechanisms for training where the desired output sequence until t-1 is not provided, and just the hidden representation of the input is used to generate output. But this produces initial outputs that are so random and far from the desired output that we can't compute loss.
 
 A midway approach is to **occasionally** use drawn output instead of ground truth at t-1 to input into inference at t.
-![[Pasted image 20240709210424.png]]
+![image](<Pasted image 20240709210424.png>)
 
 
 ## Multihead-attention
@@ -77,7 +77,7 @@ There may be multiple contexts for each input. Each input might have different r
 
 Question:
 - How are the different contexts combined? Summed? concatenated? 
-![[Pasted image 20240709211241.png]]
+![image](<Pasted image 20240709211241.png>)
 
 ### Getting rid of Recurrence in input representation?
 Our encoder is used to produce hidden representation of inputs sequence. Because of its recurrent structure, the hidden representation of inputs at time t is influenced by all preceding elements. This is not necessary since our attention model attends to all inputs of the sequence anyways?
@@ -85,7 +85,7 @@ Our encoder is used to produce hidden representation of inputs sequence. Because
 But by removing the recurrence in the encoder, we lose the context-specificity of input embeddings. The representation of a single word in a sequence does depend on other inputs. 
 
 Solution is to use attention framework on the input to provide contextual information. The representation of inputs utilizes contextual information. This is known as self-attention.
-![[Pasted image 20240709211644.png]]
+![image](<Pasted image 20240709211644.png>)
 
 	We get rid of the recurrent structure and replace them with the self attention structure for contextual information on the inputs. Allows 1) wider contextual representation, 2) prevents recency bias, 3) more granular contextual representation. 
 
@@ -104,14 +104,14 @@ For each word:
 - Compute the weighted sum of the values of all words using the normalized weights.
 
 
-![[Pasted image 20240709213658.png]]
+![image](<Pasted image 20240709213658.png>)
 
 Multi-head attention uses multiple attention heads.
 - each head with a unique set of query-key-value sets.
 - with independent attentions weights
 - with independent outputs.
 Final output is an concatenation of the outputs of the attention heads. You end up with a single vector representation for each input. They have the multihead attention representation the input at time i.
-![[Pasted image 20240709214600.png]]
+![image](<Pasted image 20240709214600.png>)
 
 
 multi-head attention modules can be followed by an MLP module, which is known as a multi-head self-attention block. 

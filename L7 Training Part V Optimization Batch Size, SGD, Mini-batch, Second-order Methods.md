@@ -1,4 +1,4 @@
-Notes on SGD: [[Back Propagation]], [[Stochastic Gradient Descent]]
+Notes on SGD: [[Back Propagation>), [[Stochastic Gradient Descent>)
 
 
 
@@ -9,7 +9,7 @@ Notes on SGD: [[Back Propagation]], [[Stochastic Gradient Descent]]
 **Procedure:**
 - maintain running estimate of mean squared value of derivative of each parameter.
 - scale learning rate by inverse of root mean square derivative.
-![[Pasted image 20240530213855.png]]
+![image](<Pasted image 20240530213855.png>)
 **More notes on RMS prop:**
 - Its an extension of Adagrad, which scaled the learning rate differently for each parameter according the sum of gradient squared. This addressed the problem of equal step size for every parameter causing divergence, since the optimal learning rate is different for each parameter. But this shrinked the learning rate too fast before convergence to a good local minima. So instead of using the sum of squared derivatives, we use the running average.
 -
@@ -23,4 +23,4 @@ Momentum: adjusts gradient according to running average of previous gradient.
 - can overcome saddle points.
 - prevent oscilations.
 **ADAM combines both:**
-![[Pasted image 20240530221151.png]]
+![image](<Pasted image 20240530221151.png>)

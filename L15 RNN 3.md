@@ -9,7 +9,7 @@ The structure of input and outputs are different from ordinary MLP in that input
 	How would you describe time aligned and synchrony?
 
 ## Variants of recurrent nets and examples
-![[Pasted image 20240701152318.png]]
+![image](<Pasted image 20240701152318.png>)
 Many to one:
 - sequence classification: predict single class for a sequence of inputs.
 - examples: phrase recognition
@@ -19,7 +19,7 @@ Order synchronous, time asynchronous sequence to sequence generation:
 	- you have a sequence of inputs, and you need to predict sequence of output. Order matters, but time doesn't matter as much, or is less clearly defined/labelled.
 - i guess this is a variant of many to one recurrent net.
 
-![[Pasted image 20240701152608.png]]
+![image](<Pasted image 20240701152608.png>)
 Many to many:
 - A posteriori sequence to sequence: get generate output sequence after processing input.
 - example: language translation
@@ -44,7 +44,7 @@ example: assigning grammar tags to words.
 
 Time synchronous networks can also make the useful assumption that the total divergence of the Y_out and Y_desired sequence is the sum of divergence of individual instants.
 	This is because there is a one to one correspondence in input and output?
-![[Pasted image 20240701154233.png]]
+![image](<Pasted image 20240701154233.png>)
 
 ## Many to one recurrent nets
 example: answering questions:
@@ -55,23 +55,23 @@ example: phenome recognition
 - output: phenome ID at end of sequence.
 	- N-dimensional probability vector were N is the number of phenome categories.
 
-![[Pasted image 20240701154918.png]]
+![image](<Pasted image 20240701154918.png>)
 many to one RNN:
-![[Pasted image 20240701154958.png]]
+![image](<Pasted image 20240701154958.png>)
 We treat many-to-one RNN as many-to-many RNN for learning since more useful to calculate divergence.
 ## Inference: forward pass
 In many-to-one recurrent nets, output is generated at every t, but its only read at the end of the sequence. But none-the-less we do extend the phenome(or any Y_desired) over range of t's so that we can propagate the divergence for the intermediate structures. So we are converting a many-to-one, order synchronous, time-asynchronous RNN to a order-synchronous, time synchronous RNN. (Many to one RNN's are always order synchronous because there's only one order to arrange things.)
 	We also end up making the necessary simplication for calculating the divergence, since we convert the form to a time synchronous RNN:  the total divergence of the Y_out and Y_desired sequence is the sum of divergence of individual instants.
- ![[Pasted image 20240701155856.png]] 
+ ![image](<Pasted image 20240701155856.png>) 
 	 We smear/merge output to untagged outputs.
-![[Pasted image 20240701155910.png]]
+![image](<Pasted image 20240701155910.png>)
 	As we did with time-synchronous RNN models, we treat divergence of output as the sum of divergence of components.
 	We can give different weights for divergence at each time t, depending on how important the prediction is at each t?
 	example: answering questions. Y_out is more significant at end of the sequence. Higher weight at later T.
 
 
 ## Sequence to sequence problems: order-synchronous, time asynchronous
-![[Pasted image 20240701160920.png]]
+![image](<Pasted image 20240701160920.png>)
 
 Problem objective: given sequence of inputs, asynchronously output a sequence of symbols.
 - this is concatentation of many-to-one RNN.
@@ -85,16 +85,16 @@ Each column is the Y_out at each time t. Its a vector of probabilities for each 
 	~~(We make maximum a posteriori classification to select best label at each time t.)~~
 	Our objective is not to pick the MAP class label at each time t, but to pick the sequence with greatest MAP. 
 Each row is the probability of a given class through time t.
-![[Pasted image 20240701161004.png]]
+![image](<Pasted image 20240701161004.png>)
 
 **Our objective being picking the sequence of output Y that has the highest a posterior probability, how do we do this?**
 
-![[Pasted image 20240701161507.png]]
+![image](<Pasted image 20240701161507.png>)
 method 1: 
 - pick class with highest probability at each t. 
 - merge adjacent classes with the same predictions and keep the last output.
 - problem: you can't distinguish true repeats of class vs just merging of class. 
-![[Pasted image 20240701161701.png]]
+![image](<Pasted image 20240701161701.png>)
 
 So the important questions are:
 1. how do you know when to output symbols, when the network outputs at every time? (we want time asynchronous output, but training is done with time synchrony)
@@ -108,7 +108,7 @@ To train the model, we need the desired Y, but we don't have the exact desired Y
 		They are order synchronous, but not time-synchronous. 
 	**We need to align the labels**: expand them over t in the correct time-synchrony.
 		But we don't have this information, so what are we going to do?
-![[Pasted image 20240701162315.png]]
+![image](<Pasted image 20240701162315.png>)
 
 ### One solution is: guess alignment, train model, and iterate
 **Description:**
@@ -119,7 +119,7 @@ Steps:
 - initialize:
 	- initialize initial allignment
 		- problem: the initial alignment may cause the network to be stuck in local minima.
-		- solution: [[Connectionist temporal classification]] for original paper, [[L16 Sequence to sequence models Connectionist Temporal Classification]] for lecture
+		- solution: [[Connectionist temporal classification>) for original paper, [[L16 Sequence to sequence models Connectionist Temporal Classification>) for lecture
 - iterate:
 	- train network using current allignment
 		- minimizing loss w.r.t. model parameters
@@ -132,7 +132,7 @@ In words:
 	given K-length compressed sequence, and given N-lengthed input, find the expanded sequence, that is most likely. 
 
 in math:
-![[Pasted image 20240701163704.png]]
+![image](<Pasted image 20240701163704.png>)
 
 
 #### mechanism of aligning sequence:
@@ -145,13 +145,13 @@ There are many ways to expand the compressed sequence. What are some good ways?
 
 **Method 1:** mask unnecessary outputs
 We only consider elements that appeared in compressed sequence and mask all the others when we choose elements with highest M.A.P. So even if the model predicts a given class as the most probably class at time t, if that class is not in Y_desired, we can not choose that as alignment class. We choose element with MAP on reduced grid.
-![[Pasted image 20240701164321.png]]
-![[Pasted image 20240701164404.png]]
+![image](<Pasted image 20240701164321.png>)
+![image](<Pasted image 20240701164404.png>)
 
 
 **Method 2:** explicitly arrange constructed table
 Construct table of possible output class, in the order in which each element of the sequence appears in the Y_out sequence. 
- ![[Pasted image 20240701164532.png]]
+ ![image](<Pasted image 20240701164532.png>)
 
 Explicitly constrain alignment: the alignment is the path along the graph.
 - first element must be top left, and path must end at bottom right.
@@ -159,7 +159,7 @@ Explicitly constrain alignment: the alignment is the path along the graph.
 	- because the table has been constructed such that the order of rows are order in which elements occur in Y_desired sequence.
 	- monotonically means the gradient doesn't change sign. Path doesn't go up.
 - guarantees the sequence is an expansion of the target sequence.
-![[Pasted image 20240701164730.png]]
+![image](<Pasted image 20240701164730.png>)
 Pick alignment of Maximum a posteriori, or the most probable path from source to sink using algorithm finding best path score.
 - The best path score is the product of probabilities of all nodes along the path.
 	- ex) Scr(path) = Y0B x Y1B x Y2IY x Y3IY x Y4F x Y5F x Y6F x Y7IY x Y8IY
@@ -175,13 +175,13 @@ Brief explanation of The Viterbi Algorithm
 **The Viterbi algorithm gives us the assumed target for training.**
 After fixing the target sequence, we optimize our RNN parameters with gradient descent. 
 We use Div = sum over t (div(Yt,symbol_t of bestpath)). 
-![[Pasted image 20240702084952.png]]
+![image](<Pasted image 20240702084952.png>)
 - Makes sense because of probability of Y is small, then the gradient is negative and large. We want to make large changes in our parameters, because our estimated probability is low for class of Y, which is the symbol at time t under our estimation of best path/best allignment.
 - If probability of Y is high, then gradient is small. 
 
 **Iterative estimating and training**
 After training our parameters to produce highest probability given alignment, we decode the table of probabilities again to get new alignments according to new probabilities. 
-![[Pasted image 20240702085515.png]]
+![image](<Pasted image 20240702085515.png>)
 
 
 The decode and train steps may be combined into a single block for SGD and minibatch updates?
@@ -199,4 +199,4 @@ So in option 1 we initialize the alignments for all training instances even befo
 
 But in option 2, we initialize alignment for each instance and gradient descent step of SGD. So for the next instance, we get new alignment based on updated parameters in previous SGD step.
  
-![[Pasted image 20240702085515.png]]
+![image](<Pasted image 20240702085515.png>)

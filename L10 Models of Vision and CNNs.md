@@ -2,13 +2,13 @@
 There are two stages for computing output map:
 1. Compute affine map with convolution of a filter.
 2. Elementwise activation of output of covolution.
-![[Pasted image 20240623120059.png]]
+![image](<Pasted image 20240623120059.png>)
 
 
 ### Convolution with filter
 
 
-![[Pasted image 20240620092543.png]]
+![image](<Pasted image 20240620092543.png>)
 **Ill try to organize in terms of top-down hierarchy.**
 
 **A single Convolutional layer:**
@@ -19,7 +19,7 @@ There are two stages for computing output map:
 - has as many output neurons as number of filters.
 	- The number of output neurons is equal to the number of filters.
 	- Each filter has as many unique kernels as the number of input channels/maps/neurons in previous layer.
-![[Pasted image 20240623115040.png]]
+![image](<Pasted image 20240623115040.png>)
 
 
 **A single output neuron/filter:**
@@ -44,7 +44,7 @@ For each filter, we do an affine transformation for each input channel then sum 
 The affine transformation and summing over the results of individual channels combines information from various channels. This is feature combination, which creates a new more abstract/complex feature.
 
 
-![[Pasted image 20240621195322.png]]
+![image](<Pasted image 20240621195322.png>)
 
 
 
