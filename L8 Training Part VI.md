@@ -18,10 +18,10 @@ tags:
 **steeper far from minimum and flatter close to minimum**
 - Flat gradient far from minimum is bad because it takes a long time to converge.
 - Steep gradient close to minimum is bad because of overshoot.
-- ![image](<Pasted image 20240528084841.png>)
+- ![image](</Images/Pasted image 20240528084841.png>)
 
 ### The shape of the loss function depends on what divergence function we use and what parameter we calculate the differentiate w.r.t.
-![image](<Pasted image 20240528084906.png>)
+![image](</Images/Pasted image 20240528084906.png>)
 - note: when we use different divergence as loss function, with sigmoid activation function.
 - **The layers of activation function makes it difficult to predict shape of loss function w.r.t. parameters.**
 	- L2 is better loss function w.r.t. y.
@@ -35,7 +35,7 @@ Solution is two fold:
 2. move entire batch by scaling by gamma and adding beta.
 
 ## Batch Normalization
-![image](<Pasted image 20240528090034.png>)
+![image](</Images/Pasted image 20240528090034.png>)
 Normalization on each instances of batch:
 **At what level:** Specific for each neuron.
 	- normalizing each scalar feature independently.
@@ -47,7 +47,7 @@ Normalization on each instances of batch:
 **During inference/testing: use the mean of batch means and mean of batch variance.**
 	**Q. How do you calculate the mean of batch means?**
 		A. Running Average: if alpha = 0.5, then arithmetic mean of batch.
-		![image](<Pasted image 20240611105923.png>)
+		![image](</Images/Pasted image 20240611105923.png>)
 	**Q. Why would you use anything other than arithmetic mean of batch mean?**
 		A. Because initial values of batch mean are batch mean of less trained network. The gamma and beta parameters are also less learned, including those of the previous layers. The mean of the batches will change as more training steps are taken. Why? because the parameters of previous layers change. This is internal covariate shift, which was the whole point of performing batch normalization. What mean and variance to use during inference must be decided.
 		
@@ -64,14 +64,14 @@ For each instance zi:
 
 ### Complications for derivatives:
 **Usual derivatives are calculated as the empirical average of derivatives for all training samples.** This is because we can assume that each input of the mini-batch are independent from each other. Then the loss function and the derivatives are independent.
-![image](<Pasted image 20240528090413.png>)
+![image](</Images/Pasted image 20240528090413.png>)
 
 
 **Batch normalization means that each batch normalized instances are no longer independent from other inputs since they are normalized using the same transformation: batch mean and batch variance.**
-	![image](<Pasted image 20240528090635.png>)
+	![image](</Images/Pasted image 20240528090635.png>)
 
 **Using chain rule to calculate gradient of Loss w.r.t. beta and gamma.**
-	![image](<Pasted image 20240611110812.png>)
+	![image](</Images/Pasted image 20240611110812.png>)
 	- dLoss/dB = dLoss/dz: because Beta has power of 1. dz/dB = 1.
 	- dLoss/dy = u of that training instance x dLoss/dz of that instance.
 	
@@ -79,13 +79,13 @@ For each instance zi:
 
 **When all instances of batch are identical or nearly identical, dLoss/dzi = 0. This means batch norm works well when the samples within batch are diverse.** 
 - also doesn't work when batch size= 1. 
-![image](<Pasted image 20240528090808.png>)
+![image](</Images/Pasted image 20240528090808.png>)
 
 **Batch Norm for inference**
 When we were training, we used batch specific mean and variance to normalize the training instances.
 When we make predictions, we use the entire training set without batches. But we need to normalize the input because the parameters for individual neurons have been trained on normalized inputs.
 **We use the average values of batch mean and batch variance over all batches.**
-![image](<Pasted image 20240528091409.png>)
+![image](</Images/Pasted image 20240528091409.png>)
 Note:
 - these are neuron specific mean and variances used to normalize input to neurons.
 - Ub and sigma B are from final converged network.
@@ -102,24 +102,24 @@ Note:
 	- Also needs better randomization of training data order
 
 ## Overfitting and Regularization
-![image](<Pasted image 20240528102303.png>)
+![image](</Images/Pasted image 20240528102303.png>)
 - Large weight values mean that individual neurons are able to fit to steep changes.
 
 ### Regularization puts constrains on L2 norm of weights.
-![image](<Pasted image 20240528102453.png>)
+![image](</Images/Pasted image 20240528102453.png>)
 - lambda is the regularization constraint.
 - But we sum over all layers k and lambda is applied on the sum of all Wk.
 	- So regularization is not layer specific, but network wide?
 
 
 **Pseudo-code for Regularization on Mini-batch**
-![image](<Pasted image 20240528103549.png>)
+![image](</Images/Pasted image 20240528103549.png>)
 Question: are the constrain on magnitude of weights layer specific?
 
 ## Smoothness through network structure
 - Using deeper networks with same number of parameters makes function smoother.
 - This is because further layers uses output of previous layers. This means the gradients often end up getting flatter further up. 
-![image](<Pasted image 20240528103800.png>)
+![image](</Images/Pasted image 20240528103800.png>)
 ## Drop out regularization:
 - For each training instance, each neuron(including input) has probability of drop out of (1-a).
 	- This means that neuron is turned off in the network.
@@ -130,13 +130,13 @@ Question: are the constrain on magnitude of weights layer specific?
 ### Testing with dropout
 There are effectively 2^N different networks. We want the ensemble of the network output.
 **To choose the final network that has the average of the 2^N networks, we need the expected value of the final network.**
-![image](<Pasted image 20240528104912.png>)
+![image](</Images/Pasted image 20240528104912.png>)
 - The network is a function of individual neurons in the net.
 
 **But instead we calculate the network of the expected value of each individual node.**
-![image](<Pasted image 20240528105050.png>)
+![image](</Images/Pasted image 20240528105050.png>)
 **The expected value of the j'th neuron of k'th layer can be computed by:**
-![image](<Pasted image 20240528105156.png>)
+![image](</Images/Pasted image 20240528105156.png>)
 - expected value of bernoulli = p (or alpha in this case).
 
 **Implementing dropout during test**
@@ -148,11 +148,11 @@ Alternatively, you can multiply all weights by alpha.
 Training error and test error does not always go together. Model can overfit to training data.
 We calculate running test error periodically on validation set.
 Stop early if training error and test error begins to diverge after many epochs.
-![image](<Pasted image 20240528105639.png>)
+![image](</Images/Pasted image 20240528105639.png>)
 
 **Gradient clipping: Ceiling on value of gradient prevents overshoots.**
 Change to weight is proportional to both step size and gradient. Gradient that are too big may cause overshooting over minimas. Ceiling on the gradient prevents this.
-![image](<Pasted image 20240528105816.png>)
+![image](</Images/Pasted image 20240528105816.png>)
 
 
 **Data Augmentation: we augment existing data to create more samples of data.**

@@ -5,7 +5,7 @@
 4. case-study: large language models
 
 ## 1. Transformer architecture
-![image](<Pasted image 20240716163553.png>)
+![image](</Images/Pasted image 20240716163553.png>)
 **The general architecture of a transformer is composed of two parts: encoder and decoder.**
 Encoder is mainly for creating hidden representations of input sequences in a meaningful way, particularly by employing attention mechansims.
 
@@ -17,13 +17,13 @@ The attention mechanism in encoder is a self-attention mechanism that gives cont
 Our task is to process translate some input sequence and generate an output sequence.
 
 ### Input processing:
-![image](<Pasted image 20240717083837.png>)
+![image](</Images/Pasted image 20240717083837.png>)
 The initial steps of input processing is:
 1. Input embeddings
 2. positional encoding.
 
 #### Input embeddings
-![image](<Pasted image 20240716164319.png>)
+![image](</Images/Pasted image 20240716164319.png>)
 Sequence of words is first tokenized, or split into individual words.
 Individual tokens are represented as one-hot encoded vectors.
 They are passed through embedding layer to create embeddings for each words.
@@ -39,10 +39,10 @@ They are passed through embedding layer to create embeddings for each words.
 - Inputs close together in time are similar in perturbation angle.
 
 ### Attention:
-![image](<Pasted image 20240717083901.png>)
-	![image](<Pasted image 20240716165435.png>)
+![image](</Images/Pasted image 20240717083901.png>)
+	![image](</Images/Pasted image 20240716165435.png>)
 	The context weight assigned to each word representation V is computed by taking the Softmax of the dot product of the i'th Query vector and j'th Key vector for each j'th word.
-![image](<Pasted image 20240717154903.png>)
+![image](</Images/Pasted image 20240717154903.png>)
 
 **Query**: builds question
 **Key**: interacts with queries, distinguishes objects from one another, identify which object is relevant to query and by how much.
@@ -57,7 +57,7 @@ The learning of attention weights can be parallelized, so the embeddings for wor
 
 
 
-![image](<Pasted image 20240716165155.png>)
+![image](</Images/Pasted image 20240716165155.png>)
 	**Figure: self-attention in encoder**
 	- softmax result becomes the relative weight assigned to that word embedding. 
 	- The weighted sum of each word embedding of the sequence becomes a rich embedding of the an element of the sequence that includes the contextual information now, via the weighted summing over all words of the sequence.
@@ -84,7 +84,7 @@ Multiple heads allows learning of different contextual information for single to
 	We want to preserve the information in the input dimensions while not making the computation too expensive. We  want the vector representation each token to roughly remain the same before and after attention. So if the input was initially embedded using 256 length vector, and we are using 2 attention heads, each attention head would output an embedding of 128, and these two embeddings will be concatenated to produce a final embedding from the multi-head attention of length 256.
 
 ### Feed forward
-![image](<Pasted image 20240716170959.png>)
+![image](</Images/Pasted image 20240716170959.png>)
 The feed forward layer is followed by an activation function.
 	- Learn non-linearities.
 	- Complex relationships
@@ -128,13 +128,13 @@ This means that the output at time t has no access to information at t+1 and on 
 
 We implement masking by adding a negative infinity to the pre-softmax QK/sqrt(d) terms that come after t. This means that after softmax, the attention weight on all elements that come after time t are equal to 0. This ensures that we don't assign weights to tokens of the sequence that are in the future. Although they are available during training, they will not be available during inference mode. Only output tokens prior to t are available during inference, so we will only assign weights to them, and the weights will sum to 1 because we added the negative infinity before the softmax function.
 
-![image](<Pasted image 20240716181130.png>)
+![image](</Images/Pasted image 20240716181130.png>)
 	Figure: Masking of attention weights of output tokens that will not be available during inference of t'th output.
 
-![image](<Pasted image 20240716181534.png>)
+![image](</Images/Pasted image 20240716181534.png>)
 	Figure: We mask the attention by adding a negative infinity term to the pre-softmax QK^T values.
 
-![image](<Pasted image 20240716181554.png>)
+![image](</Images/Pasted image 20240716181554.png>)
 	Figure: The weighted sum of all of the output value. At t'th output, we get the weighted sum of the output vectors (with dimensions dh) from time 0 to t-1. 
 ### Encoder decoder cross attention
 Encoder decoder cross attention is when the output element asks contextual information to all elements of the input sequence.
@@ -167,13 +167,13 @@ Weight tying with input embedding matrix:
 	- 
 - 
 
-![image](<Pasted image 20240716184907.png>)
+![image](</Images/Pasted image 20240716184907.png>)
 	Figure: The linear layer projects from the dimensions of the decoder to the output dimensions V. Multiply Td x D_model matrix by (V x D_model).transpose gives Td x V matrix, as shown in the softmax figure below.
 
 ### Softmax:
 This layer converts the unnormalized probabilities and normalizes them. 
 
-![image](<Pasted image 20240716184833.png>)
+![image](</Images/Pasted image 20240716184833.png>)
 	Figure: Softmax. Td is the number of output sequence. V is the output dimensions. Softmax is applied across V for each Td.
 
 
@@ -188,7 +188,7 @@ Question: does this mean that the hidden representation of a given token may dif
 
 Question: Where is the Q generated from during masked self attention?
 	Answer: Its generated from the output token for which we are generating the self-attention weight for. K are from all other output tokens that currently exist, includig the self. 
-		![image](<Pasted image 20240716165155.png>)
+		![image](</Images/Pasted image 20240716165155.png>)
 
 
 **Encoders can also generate tokens.**
@@ -208,9 +208,9 @@ Decoder's attention is often masked to see only output tokens currently availabl
 **Question: Whats the difference between a encoder and a RNN?**
 	The difference is the recurrence? Encoder takes away the recurrent nature where the model feeds the hidden representation of the input at time t to generating the hidden representation of the input at time t+1. This is replaced with a self-attention mechanism with positionally encoding, where each word attends to all words within a sequence with learned weights.
 		
-	![image](<Pasted image 20240709211644.png>)
+	![image](</Images/Pasted image 20240709211644.png>)
 
-![image](<Pasted image 20240716222042.png>)
+![image](</Images/Pasted image 20240716222042.png>)
 
 # part 2. training and inference
 Training of transformers can be divided into three steps:
@@ -230,7 +230,7 @@ For example LoRA (lower rank adaptation) decomposes the parameter weights matrix
 
 **Bitfit:**
 Bitfit freezes the weight matrix term and just trains the bias term. THeres lots of leverage in just changing the bias term because of the later non-linear activation layers.
-![image](<Pasted image 20240716223046.png>)
+![image](</Images/Pasted image 20240716223046.png>)
 # part 3. Transformer applications
 ### computer vision:
 Vision transformers: (ViT)
@@ -242,7 +242,7 @@ Vision transformers: (ViT)
 5. For classification, add linear layer that project from transformer hidden representation dimensions to output class dimensions.
 	What's the output sequence structure for ViT?
 	
-![image](<Pasted image 20240716223454.png>)
+![image](</Images/Pasted image 20240716223454.png>)
 
 ### Multimodel transformers
 separate encoder blocks for different modalities.
@@ -270,11 +270,11 @@ Question: Because its an encoder only model, its output sequence length is equal
 
 **We learn this embedding of words via Masked Language Modeling.**
 
-![image](<Pasted image 20240717105050.png>)
+![image](</Images/Pasted image 20240717105050.png>)
 	Figure: Masked language model. You mask a token in a input sequence. You train the model to predict the token of the masked token, by adding a prediction head only to the masked token. The prediction head would project from the embedding dimensions to the vocabulary dimensions. 
 
 **Next sentence prediction**
-![image](<Pasted image 20240717105925.png>)
+![image](</Images/Pasted image 20240717105925.png>)
 	Give bert sequence of two sentences that can be adjacent to each other in the original corpus, or random two sentences. Then train the model to predict whether the two sentences are adajcent or not via attaching a prediction head on the <cls> classifier token that is at the beginning of the two sentence sequence. This prediction task trains the embeddings to include the relationships between words in multiple sentence structure. 
 
 **Question: How does learning for other word embeddings occur when the prediction head is attached to the classifier head?**

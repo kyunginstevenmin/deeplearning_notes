@@ -32,9 +32,9 @@ CNNs is a finite response system. aka Time-delay neural network when one dimensi
 - there is a finite window of input that affects the model.
 - We shift with fixed window of input along the time axis.
 
-![image](<Pasted image 20240627083328.png>)
+![image](</Images/Pasted image 20240627083328.png>)
 	The network looks back upto T-N input vectors, where N = 3.
-![image](<Pasted image 20240627083511.png>)
+![image](</Images/Pasted image 20240627083511.png>)
 	The network looks at X's from current t to t-N, to product an output.
 
 ### Infinite response systems: Everything in the past lies in Y.
@@ -43,7 +43,7 @@ CNNs is a finite response system. aka Time-delay neural network when one dimensi
 - Even if Xt = 0 or input does not existed, Yt can be computed with from Yt-1.
 - Few requirements:
 	- initial state of Yt-1, when t=0 must be defined.
-![image](<Pasted image 20240627084144.png>)
+![image](</Images/Pasted image 20240627084144.png>)
 
 
 
@@ -56,7 +56,7 @@ CNNs is a finite response system. aka Time-delay neural network when one dimensi
 	- The output at t becomes the input of the next network at t+1. 
 - More generic Narx Network can also have incorporate previous input data into current predictions as well as previous output data.
 	- Yt would be a function of (Xt, ..., Xt-L) and (Yt-1, ..., Yt-K)
-![image](<Pasted image 20240626132020.png>)
+![image](</Images/Pasted image 20240626132020.png>)
 
 ### How do you make memory a more explicit component of the network?
 There are several networks that were developed to make memory an explicit component of the network.  
@@ -64,7 +64,7 @@ There are several networks that were developed to make memory an explicit compon
 
 We create a memory variable at mt, with is a function of previous y, previous hidden values, and previous memory variable value.
 We make the current network a function of current Xt, and the memory variable mt.
-![image](<Pasted image 20240627085555.png>)
+![image](</Images/Pasted image 20240627085555.png>)
 
 
 Two of which are: Jordan network, and Elman Network.
@@ -74,7 +74,7 @@ Two of which are: Jordan network, and Elman Network.
 - but still, memory unit is fixed structure: no learning of parameters.
 	- What do we mean by there is no learning parameters?
 	- How the past outputs affect current output is not learnable. There's no associated parameter.
-![image](<Pasted image 20240627085633.png>)
+![image](</Images/Pasted image 20240627085633.png>)
 
 
 #### Elman Networks:
@@ -88,15 +88,15 @@ Two of which are: Jordan network, and Elman Network.
 		- So the derivative of loss w.r.t. the green hidden unit should be the sum of derivative via y(t) and via the hidden unit at t+1. State space model does this. 
 - solution:
 	- But the State-space model is an model that carries historical state of hidden units to current state of hidden units, and allows back propagation of current error to previous hidden states. 
-![image](<Pasted image 20240627090022.png>)
+![image](</Images/Pasted image 20240627090022.png>)
 
 ### The state-space model
 Fully recurrent networks.
 - current state(ht) is a function of previous hidden state and current input.
 	- this is the recurrent element, since the definition of the current state is defined by the the same definition at t-1.
 - current output, yt, is a function of the current state. 
-![image](<Pasted image 20240627090702.png>)
-![image](<Pasted image 20240627090803.png>)
+![image](</Images/Pasted image 20240627090702.png>)
+![image](</Images/Pasted image 20240627090803.png>)
 
 	Current state is affected by input at t, and state at t-1.
 	Input at t=0 affects outputs forever.
@@ -105,7 +105,7 @@ Fully recurrent networks.
 generalizations with other recurrences:
 - current hidden state can affect not just next hidden state, but next next hidden state.
 ### Equation of RNN:
-![image](<Pasted image 20240627093710.png>)
+![image](</Images/Pasted image 20240627093710.png>)
 	W(1): weight of X(t) on intermediate value which is used for h(t).
 	W(1,1): weight of how hidden state h(t-1) on h(t)
 	Affine transformation of W(1) and X(t) and W(1,1) and h(t-1)  + bias.
@@ -114,8 +114,8 @@ generalizations with other recurrences:
 		The activation function could be a vector activation like softmax.
 
 ### Variants on recurrent nets
-![image](<Pasted image 20240627094227.png>)
-![image](<Pasted image 20240627094254.png>)
+![image](</Images/Pasted image 20240627094227.png>)
+![image](</Images/Pasted image 20240627094254.png>)
 
 
 ### how do we train the network?
@@ -140,9 +140,9 @@ First step: derivative of divergence w.r.t. Y at all T.
 - we need all the derivatives for back prop.
 
 
-![image](<Pasted image 20240626143010.png>)
+![image](</Images/Pasted image 20240626143010.png>)
 
 ### Bidirectional RNN
-![image](<Pasted image 20240627094356.png>)
+![image](</Images/Pasted image 20240627094356.png>)
 - We can concatenate outputs of forward pass and backward pass.
 - 

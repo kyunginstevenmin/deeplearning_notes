@@ -15,13 +15,13 @@
 	1. There can be analytic solutions to find where first derivative = 0 and second derivative is +. But often there is not analytic solution
 ### Notes on derivatives:
 - Derivatives are functions of the variable: this means that derivatives changes w.r.t. x.
-![image](<Pasted image 20240520105302.png>)
+![image](</Images/Pasted image 20240520105302.png>)
 
 ### Derivatives of vectors:
 - derivatives of vectors are vectors of partial derivatives.
 	- Each partial derivative shows how much f(x) changes when xi changes minutely while other xd are constant.
 	- Total change in f(X) is given by product sum of derivative and change in x(vector).
-	- ![image](<Pasted image 20240520105558.png>)
+	- ![image](</Images/Pasted image 20240520105558.png>)
 - Gradient is the transpose of the derivative. It gives direction of X at which f(X) increases or decreases the most.
 	- We can see this through property of inner product.	
 
@@ -32,13 +32,13 @@
 - Change in f(X) is the inner product of the gradient and change in X. This means that the change in f(X) is greatest when the angle between the gradient and change in X is 0, or when they are pointing towards the same direction (Given that magnitude is fixed). 
 - Thus gradient is the direction of X at which change in f(X) is the greatest.
 - This direction is also perpendicular to the level curve, which is the contour of x at which f(x) is the same.
-![image](<Pasted image 20240520110031.png>)
-	![image](<Pasted image 20240520110210.png>)
+![image](</Images/Pasted image 20240520110031.png>)
+	![image](</Images/Pasted image 20240520110210.png>)
 	
 
 
 ## 4. Gradient descent algorithm is a way to experimentally find the minimum by iterative steps towards X at which f(X) decreases the most, which is the direction of the gradient.
-![image](<Pasted image 20240520110533.png>)
+![image](</Images/Pasted image 20240520110533.png>)
 
 The algorithm for gradient descent is given by:
 	- we are minimizing loss(wk) w.r.t. w. 
@@ -52,16 +52,16 @@ The algorithm for gradient descent is given by:
 	- step size nk:
 		- nk is a iteration dependent step size.
 		- How is it iteration dependent?
-	![image](<Pasted image 20240520104439.png>)
+	![image](</Images/Pasted image 20240520104439.png>)
 
 ## 5. Problem set up
 **Individual neurons are an activation function applied on a affine function of inputs.**
-![image](<Pasted image 20240520151850.png>)
+![image](</Images/Pasted image 20240520151850.png>)
 **Outputs can be scalars and also vectors. There can be vector activations that couples the outcome of the entire layer. Softmax is an example that is particularly useful for multi-class class. It calculates the probability of each outcome in a multiclass classification. The sum of probability of all classes sum to 1.**
 - Exponential function is applied to each zi. This makes each zi positive.
 - Dividing by sum of all zi for all i in layer normalizes the values, which gives yi, which is the probability of each uotcome. They sum to 1.
 - Thus the output is a vector of probabilities
-![image](<Pasted image 20240520152428.png>)
+![image](</Images/Pasted image 20240520152428.png>)
 
 ## 6. Divergence functions:
 Divergence functions are the loss functions or the error functions that we are trying to minimize w.r.t. the parameters. There are multiple types. For regression, L2 divergence. For classification, KL divergence.
@@ -69,13 +69,13 @@ Divergence functions are the loss functions or the error functions that we are t
 - Its the sum of squared difference of i'th dimension.
 - The derivative is (y-d). if y>d, then the derivative of error is positive. Increasing y increases error.
 - If derivative is negative, y<d. Then increasing y decreases error.
-![image](<Pasted image 20240520154513.png>)
+![image](</Images/Pasted image 20240520154513.png>)
 **KL divergence**
 - for probability, KL divergence is used.
 - its the -log(probability). Ranges from 0 to infinity.
 - also known as the cross entropy
-![image](<Pasted image 20240520154737.png>)
-![image](<Pasted image 20240520154900.png>)
+![image](</Images/Pasted image 20240520154737.png>)
+![image](</Images/Pasted image 20240520154900.png>)
 
 **KL divergence of multiclass classification**
 - The divergence formula reduces to just -log(yc), where yc is the probability output of desired class c. 
@@ -85,4 +85,4 @@ Divergence functions are the loss functions or the error functions that we are t
 	- The smaller the yc, the divergence, since p=1 is the desired outcome. 
 	- increasing yc makes it closer to p=1, which reduces error, hence the derivative is negative.
 	- even at yc=1, which is minimum divergence, the derivative is not 0.
-![image](<Pasted image 20240520155351.png>)
+![image](</Images/Pasted image 20240520155351.png>)

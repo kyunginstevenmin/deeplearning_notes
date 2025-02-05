@@ -13,10 +13,10 @@ For CNNs, if the inputs are bounded, then the output is also bounded.
 
 for RNN's, because inputs are bounded, we only need to look at recurrent layers to see BIBO stability.
 	further assume linear activation at recurrent layer.
-	![image](<Pasted image 20240629121549.png>)
+	![image](</Images/Pasted image 20240629121549.png>)
 
 
-![image](<Pasted image 20240629121626.png>)
+![image](</Images/Pasted image 20240629121626.png>)
 - weights Wh are fixed. Wx are also fixed.
 
 
