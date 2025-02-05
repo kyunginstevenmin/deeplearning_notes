@@ -1,0 +1,1 @@
+Q1. We use softmax activation on final layer to see if any segment of the entire input space contains the our target. If the target is present in two different segments, will using softmax be a bad choice of activation since softmax has max output when max(zi) is greater than any other zi's?
