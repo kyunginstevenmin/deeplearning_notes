@@ -1,2 +1,3 @@
 # deeplearning_notes
-Notes on Deep Learning based on CMU 11-785
+These are notes on Neural Networks based on CMU 11-785 Introduction to Deep Learning course.
+The notes are for educational purposes only. 
