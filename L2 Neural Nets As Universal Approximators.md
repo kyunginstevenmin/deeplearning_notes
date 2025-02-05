@@ -6,7 +6,7 @@
 5. rbf networks.
 
 # perceptron are the basic units of a neural network
-![[Pasted image 20240519071343.png]]
+![image](https://raw.githubusercontent.com/kyunginstevenmin/deeplearning_notes/main/Pasted image 20240519071343.png)
 They have a 1) affine function of the inputs, 2) activation function. There are many activation functions. Here is a threshold gate activation, where the perceptron outputs 1 if the affine function is greater than 0.
 **There are other softer activation functions:**
 **Squashing function**: squashes affine function outputs, which ranges from negative to positive infinity to bounded y value.
