@@ -130,6 +130,53 @@ jobs:
           export default config
           EOF
 
+      - name: Configure Quartz layout
+        run: |
+          cat > quartz/quartz.layout.ts << 'EOF'
+          import { PageLayout, SharedLayout } from "./quartz/cfg"
+          import * as Component from "./quartz/components"
+
+          export const sharedPageComponents: SharedLayout = {
+            head: Component.Head(),
+            header: [],
+            afterBody: [],
+            footer: Component.Footer({
+              links: {},
+            }),
+          }
+
+          export const defaultContentPageLayout: PageLayout = {
+            beforeBody: [
+              Component.ArticleTitle(),
+              Component.ContentMeta(),
+              Component.TagList(),
+            ],
+            left: [
+              Component.PageTitle(),
+              Component.MobileOnly(Component.Spacer()),
+              Component.Darkmode(),
+              Component.Search(),
+              Component.DesktopOnly(Component.Explorer()),
+            ],
+            right: [
+              Component.DesktopOnly(Component.TableOfContents()),
+              Component.Backlinks(),
+            ],
+          }
+
+          export const defaultListPageLayout: PageLayout = {
+            beforeBody: [Component.ArticleTitle(), Component.ContentMeta()],
+            left: [
+              Component.PageTitle(),
+              Component.MobileOnly(Component.Spacer()),
+              Component.Darkmode(),
+              Component.Search(),
+              Component.DesktopOnly(Component.Explorer()),
+            ],
+            right: [],
+          }
+          EOF
+
       - name: Install dependencies
         run: cd quartz && npm ci
 
