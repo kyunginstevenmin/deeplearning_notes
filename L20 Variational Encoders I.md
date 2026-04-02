@@ -104,3 +104,5 @@ Find principal subspace such that when all the vectors are approximated as lying
 	Conversely, it is also the direction at which the variance in the original space is greatest. But the direction at which the variance in the orthogonal directional is the lowest. But why does it have to be this way?
 ![image](</Images/Pasted image 20240720082347.png>)
 
+## Variational Autoencoders
+![image](</Images/Pasted image 20240806170315.png>)
